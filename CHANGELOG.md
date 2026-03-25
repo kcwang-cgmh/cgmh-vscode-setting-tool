@@ -5,6 +5,18 @@
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.1.0/)，
 版本號遵循 [Semantic Versioning](https://semver.org/lang/zh-TW/)。
 
+## [0.2.0](https://github.com/kcwang-cgmh/cgmh-vscode-setting-tool/compare/v0.1.0...v0.2.0) (2026-03-25)
+
+
+### Features
+
+* 新增 Activity Bar 側邊欄面板，顯示三大功能入口 ([e540c70](https://github.com/kcwang-cgmh/cgmh-vscode-setting-tool/commit/e540c7044aedcdd990603feea8612789e1690080))
+
+
+### Bug Fixes
+
+* 修正側邊欄圖示垂直置中 ([355ba90](https://github.com/kcwang-cgmh/cgmh-vscode-setting-tool/commit/355ba90ea0475ef392cea06de971379f17ede244))
+
 ## [0.2.0] - 2026-03-25
 
 ### Added
