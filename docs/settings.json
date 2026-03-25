@@ -1,0 +1,113 @@
+{
+    // ================================================
+    // VS Code 預設設定 - Default Settings
+    // 以下所有設定都是此設定檔的預設配置
+    // ================================================
+    // ========================================
+    // 🤖 Copilot 核心設定
+    // ========================================
+    // 為不同文件類型啟用/禁用 Copilot
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false, // 純文本文件禁用
+        "markdown": true, // Markdown 啟用
+        "scminput": true, // Git 提交訊息輸入啟用
+        "yaml": true, // YAML 啟用
+        "html": true, // HTML 啟用
+        "powershell": true, // PowerShell 啟用
+        "javascript": true, // JavaScript 啟用
+        "aspnetcorerazor": true // ASP.NET Razor 啟用
+    },
+    // 選擇使用的 AI 模型
+    "github.copilot.selectedCompletionModel": "gpt-41-copilot",
+    // ========================================
+    // 📝 Copilot 編輯器功能
+    // ========================================
+    // 啟用 Copilot 程式碼操作（Quick Fix 等）
+    "github.copilot.editor.enableCodeActions": true,
+    // 自動觸發重新命名建議
+    "github.copilot.renameSuggestions.triggerAutomatically": true,
+    // 啟用下一步編輯建議
+    "github.copilot.nextEditSuggestions.enabled": true,
+    // 內聯建議中以摺疊形式顯示編輯
+    "editor.inlineSuggest.edits.showCollapsed": true,
+    // ========================================
+    // 💬 Copilot Chat 設定
+    // ========================================
+    // Chat 介面語言覆蓋（設定為繁體中文）
+    "github.copilot.chat.localeOverride": "zh-TW",
+    // 使用專案範本
+    "github.copilot.chat.useProjectTemplates": true,
+    // 在 Chat 中使用選定範圍作為上下文
+    "github.copilot.chat.scopeSelection": true,
+    // 啟用 TypeScript 語言上下文分析
+    "github.copilot.chat.languageContext.typescript.enabled": true,
+    // 啟用程式碼審查選擇功能
+    "github.copilot.chat.reviewSelection.enabled": true,
+    // 啟用 Copilot Debug 命令
+    "github.copilot.chat.copilotDebugCommand.enabled": true,
+    // 啟用測試設置助手
+    "github.copilot.chat.setupTests.enabled": true,
+    // 程式碼生成時使用指示文件
+    "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+    // 程式碼審查時的自訂指示
+    "github.copilot.chat.codesearch.enabled": true,
+    // 啟用新工作區建立功能
+    "github.copilot.chat.newWorkspaceCreation.enabled": true,
+    // ———— Chat 指示文件 ————
+    // 程式碼審查指示
+    "github.copilot.chat.reviewSelection.instructions": [
+        {
+            "text": "Always response in #zh-tw."
+        }
+    ],
+    // 提交訊息生成指示（Conventional Commits + 繁體中文）
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+        {
+            "text": "# Use Conventional Commits 1.0.0 for commit messages."
+        },
+        {
+            "text": "請一律使用正體中文來撰寫記錄"
+        }
+    ],
+    // 拉取請求描述生成指示（繁體中文）
+    "github.copilot.chat.pullRequestDescriptionGeneration.instructions": [
+        {
+            "text": "請一律使用正體中文來撰寫記錄"
+        }
+    ],
+    // ========================================
+    // 🎯 Chat 通用設定
+    // ========================================
+    // 啟用 Chat Agent
+    "chat.agent.enabled": true,
+    // Chat Agent 最大請求次數
+    "chat.agent.maxRequests": 100,
+    // 禁用自動偵測參與者
+    "chat.detectParticipant.enabled": false,
+    // 內聯 Chat 輸入時不自動完成
+    "inlineChat.finishOnType": false,
+    // ========================================
+    // 🖥️ VS Code UI 設定
+    // ========================================
+    // 顯示命令中心（頂部中央搜尋/快速導航）
+    "window.commandCenter": true,
+    // 命令選板的 Chat 位置（在 Chat 視圖中會出現查詢按鈕）
+    "workbench.commandPalette.experimental.askChatLocation": "chatView",
+    // 搜尋視圖的語義搜尋行為
+    "search.searchView.semanticSearchBehavior": "runOnEmpty",
+    // ========================================
+    // ⌨️ 終端設定
+    // ========================================
+    // 終端滾動歷史記錄行數
+    "terminal.integrated.scrollback": 50000,
+    "[markdown]": {
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    },
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilot:gpt-4.1"
+    // ================================================
+    // 使用者自訂設定 - User Customizations 
+    // 在下方加入您個人的自訂設定，這些將覆蓋上方的預設設定
+    // ================================================
+}

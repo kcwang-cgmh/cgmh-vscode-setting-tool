@@ -1,0 +1,102 @@
+{
+  "name": "cgmh-vscode-setting-tool",
+  "displayName": "長庚醫科開發設定工具",
+  "description": "快速設定長庚醫院系統開發環境：自動檢測工具、套用標準設定、安裝推薦延伸模組",
+  "version": "0.1.0",
+  "publisher": "cgmh",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "icon": "media/icon.png",
+  "contributes": {
+    "commands": [
+      {
+        "command": "cgmh.checkEnvironment",
+        "title": "檢測開發環境",
+        "category": "長庚醫科"
+      },
+      {
+        "command": "cgmh.setupProfile",
+        "title": "建立設定檔",
+        "category": "長庚醫科"
+      },
+      {
+        "command": "cgmh.installExtensions",
+        "title": "安裝推薦延伸模組",
+        "category": "長庚醫科"
+      }
+    ],
+    "configuration": {
+      "title": "長庚醫科開發設定工具",
+      "properties": {
+        "cgmh.skipEnvironmentCheck": {
+          "type": "boolean",
+          "default": false,
+          "description": "啟動時是否略過自動環境檢測"
+        }
+      }
+    },
+    "walkthroughs": [
+      {
+        "id": "cgmh.setup",
+        "title": "長庚醫科開發環境設定",
+        "description": "依照以下步驟快速設定您的開發環境",
+        "steps": [
+          {
+            "id": "cgmh.setup.checkEnv",
+            "title": "環境檢測",
+            "description": "檢查 Node.js、Git、.NET SDK 8.0 是否已正確安裝與設定。\n\n[執行環境檢測](command:cgmh.checkEnvironment)",
+            "media": {
+              "markdown": "media/walkthrough/check-environment.md"
+            }
+          },
+          {
+            "id": "cgmh.setup.profile",
+            "title": "建立設定檔",
+            "description": "建立新的 VS Code 設定檔 (Profile) 並套用長庚醫科標準設定，包含 Copilot、編輯器、終端等配置。\n\n[建立設定檔](command:cgmh.setupProfile)",
+            "media": {
+              "markdown": "media/walkthrough/setup-profile.md"
+            }
+          },
+          {
+            "id": "cgmh.setup.extensions",
+            "title": "安裝推薦延伸模組",
+            "description": "依分類選擇並安裝推薦的延伸模組，包含 C#/.NET、Git 工具、開發輔助等 33 個精選模組。\n\n[安裝延伸模組](command:cgmh.installExtensions)",
+            "media": {
+              "markdown": "media/walkthrough/install-extensions.md"
+            }
+          },
+          {
+            "id": "cgmh.setup.done",
+            "title": "設定完成！",
+            "description": "恭喜！您的開發環境已設定完成。\n\n您可以隨時透過命令面板 (Ctrl+Shift+P) 搜尋「長庚醫科」來重新執行各項功能。",
+            "media": {
+              "markdown": "media/walkthrough/done.md"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "node esbuild.mjs --production",
+    "watch": "node esbuild.mjs --watch",
+    "compile": "tsc -p ./",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/vscode": "^1.110.0",
+    "@vscode/vsce": "^3.7.1",
+    "esbuild": "^0.27.4",
+    "typescript": "^6.0.2"
+  }
+}
