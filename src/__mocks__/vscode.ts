@@ -27,6 +27,20 @@ export class ThemeIcon {
     }
 }
 
+export class EventEmitter<T> {
+    private listeners: Array<(e: T) => void> = [];
+    event = (listener: (e: T) => void) => {
+        this.listeners.push(listener);
+        return { dispose: () => { this.listeners = this.listeners.filter((l) => l !== listener); } };
+    };
+    fire(data: T) {
+        this.listeners.forEach((l) => l(data));
+    }
+    dispose() {
+        this.listeners = [];
+    }
+}
+
 export const ConfigurationTarget = {
     Global: 1,
     Workspace: 2,
