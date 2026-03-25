@@ -7,7 +7,7 @@ export function activate(context: vscode.ExtensionContext) {
     // 註冊命令
     context.subscriptions.push(
         vscode.commands.registerCommand("cgmh.checkEnvironment", checkEnvironmentCommand),
-        vscode.commands.registerCommand("cgmh.setupProfile", setupProfileCommand),
+        vscode.commands.registerCommand("cgmh.setupProfile", () => setupProfileCommand(context.globalState)),
         vscode.commands.registerCommand("cgmh.installExtensions", installExtensionsCommand)
     );
 

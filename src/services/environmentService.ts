@@ -1,3 +1,4 @@
+import * as vscode from "vscode";
 import { runCommand } from "../utils/command";
 
 export type ToolStatus = "installed" | "missing" | "misconfigured";
@@ -71,32 +72,36 @@ async function checkGit(): Promise<ToolCheckResult> {
 }
 
 async function checkDotnetSdk(): Promise<ToolCheckResult> {
+    const requiredVersion = vscode.workspace
+        .getConfiguration("cgmh")
+        .get<string>("requiredDotnetSdkVersion", "8");
+
     const result = await runCommand("dotnet", ["--list-sdks"]);
     if (result.exitCode !== 0 || !result.stdout) {
         return {
-            name: ".NET SDK 8.0",
+            name: `.NET SDK ${requiredVersion}.0`,
             status: "missing",
-            detail: "未偵測到 .NET SDK，請安裝 .NET 8.0 SDK",
-            downloadUrl: "https://dotnet.microsoft.com/download/dotnet/8.0",
+            detail: `未偵測到 .NET SDK，請安裝 .NET ${requiredVersion}.0 SDK`,
+            downloadUrl: `https://dotnet.microsoft.com/download/dotnet/${requiredVersion}.0`,
         };
     }
 
     const sdkLines = result.stdout.split("\n");
-    const sdk8 = sdkLines.find((line) => line.trim().startsWith("8."));
+    const matchedSdk = sdkLines.find((line) => line.trim().startsWith(`${requiredVersion}.`));
 
-    if (!sdk8) {
+    if (!matchedSdk) {
         const installed = sdkLines.map((l) => l.trim().split(" ")[0]).join(", ");
         return {
-            name: ".NET SDK 8.0",
+            name: `.NET SDK ${requiredVersion}.0`,
             status: "missing",
-            detail: `已安裝 .NET SDK (${installed})，但缺少 8.0 版本`,
-            downloadUrl: "https://dotnet.microsoft.com/download/dotnet/8.0",
+            detail: `已安裝 .NET SDK (${installed})，但缺少 ${requiredVersion}.0 版本`,
+            downloadUrl: `https://dotnet.microsoft.com/download/dotnet/${requiredVersion}.0`,
         };
     }
 
-    const version = sdk8.trim().split(" ")[0];
+    const version = matchedSdk.trim().split(" ")[0];
     return {
-        name: ".NET SDK 8.0",
+        name: `.NET SDK ${requiredVersion}.0`,
         status: "installed",
         version,
     };

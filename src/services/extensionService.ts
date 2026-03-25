@@ -1,6 +1,8 @@
 import * as vscode from "vscode";
 import { extensionCatalog } from "../data/extensionCatalog";
 
+const MARKETPLACE_BASE_URL = "https://marketplace.visualstudio.com/items?itemName=";
+
 /**
  * 檢查延伸模組是否已安裝
  */
@@ -8,11 +10,17 @@ function isExtensionInstalled(extensionId: string): boolean {
     return vscode.extensions.getExtension(extensionId) !== undefined;
 }
 
+interface InstallResult {
+    name: string;
+    id: string;
+    categoryLabel: string;
+    status: "installed" | "failed" | "skipped";
+}
+
 /**
  * 分類選擇並批次安裝延伸模組
  */
 export async function installExtensionsByCategory(): Promise<void> {
-    // 建立 QuickPick 項目，顯示每個分類的名稱、數量、描述
     const items = extensionCatalog.map((category) => {
         const installedCount = category.extensions.filter((ext) => isExtensionInstalled(ext.id)).length;
         const totalCount = category.extensions.length;
@@ -20,7 +28,7 @@ export async function installExtensionsByCategory(): Promise<void> {
             label: category.label,
             description: `${installedCount}/${totalCount} 已安裝`,
             detail: category.description,
-            picked: true, // 預設全選
+            picked: true,
             category,
         };
     });
@@ -35,15 +43,20 @@ export async function installExtensionsByCategory(): Promise<void> {
         return;
     }
 
-    // 收集待安裝的延伸模組（排除已安裝的）
-    const toInstall: { id: string; name: string; categoryLabel: string }[] = [];
+    // 收集所有延伸模組（含已安裝的，用於報告）
+    const allExtensions: { id: string; name: string; categoryLabel: string; alreadyInstalled: boolean }[] = [];
     for (const item of selected) {
         for (const ext of item.category.extensions) {
-            if (!isExtensionInstalled(ext.id)) {
-                toInstall.push({ id: ext.id, name: ext.name, categoryLabel: item.category.label });
-            }
+            allExtensions.push({
+                id: ext.id,
+                name: ext.name,
+                categoryLabel: item.category.label,
+                alreadyInstalled: isExtensionInstalled(ext.id),
+            });
         }
     }
+
+    const toInstall = allExtensions.filter((ext) => !ext.alreadyInstalled);
 
     if (toInstall.length === 0) {
         vscode.window.showInformationMessage("所選分類中的所有延伸模組皆已安裝！");
@@ -60,6 +73,13 @@ export async function installExtensionsByCategory(): Promise<void> {
         return;
     }
 
+    const results: InstallResult[] = [];
+
+    // 記錄已跳過的
+    for (const ext of allExtensions.filter((e) => e.alreadyInstalled)) {
+        results.push({ name: ext.name, id: ext.id, categoryLabel: ext.categoryLabel, status: "skipped" });
+    }
+
     await vscode.window.withProgress(
         {
             location: vscode.ProgressLocation.Notification,
@@ -67,12 +87,9 @@ export async function installExtensionsByCategory(): Promise<void> {
             cancellable: false,
         },
         async (progress) => {
-            let installed = 0;
-            let failed = 0;
-
             for (const ext of toInstall) {
                 progress.report({
-                    message: `(${installed + failed + 1}/${toInstall.length}) ${ext.name}`,
+                    message: `(${results.filter((r) => r.status !== "skipped").length + 1}/${toInstall.length}) ${ext.name}`,
                     increment: 100 / toInstall.length,
                 });
 
@@ -81,19 +98,62 @@ export async function installExtensionsByCategory(): Promise<void> {
                         "workbench.extensions.installExtension",
                         ext.id
                     );
-                    installed++;
+                    results.push({ name: ext.name, id: ext.id, categoryLabel: ext.categoryLabel, status: "installed" });
                 } catch {
-                    failed++;
+                    results.push({ name: ext.name, id: ext.id, categoryLabel: ext.categoryLabel, status: "failed" });
                 }
-            }
-
-            if (failed === 0) {
-                vscode.window.showInformationMessage(`已成功安裝 ${installed} 個延伸模組！`);
-            } else {
-                vscode.window.showWarningMessage(
-                    `安裝完成：${installed} 個成功，${failed} 個失敗。`
-                );
             }
         }
     );
+
+    showInstallReport(results);
+}
+
+function showInstallReport(results: InstallResult[]): void {
+    const installed = results.filter((r) => r.status === "installed");
+    const failed = results.filter((r) => r.status === "failed");
+    const skipped = results.filter((r) => r.status === "skipped");
+
+    const output = vscode.window.createOutputChannel("CGMH 延伸模組安裝");
+    output.clear();
+    output.appendLine("═══════════════════════════════════════");
+    output.appendLine("  延伸模組安裝報告");
+    output.appendLine("═══════════════════════════════════════");
+    output.appendLine("");
+
+    if (installed.length > 0) {
+        output.appendLine(`✅ 成功安裝 (${installed.length})`);
+        for (const r of installed) {
+            output.appendLine(`   ${r.name} (${r.id})`);
+        }
+        output.appendLine("");
+    }
+
+    if (failed.length > 0) {
+        output.appendLine(`❌ 安裝失敗 (${failed.length})`);
+        for (const r of failed) {
+            output.appendLine(`   ${r.name} (${r.id})`);
+            output.appendLine(`   → 手動安裝：${MARKETPLACE_BASE_URL}${r.id}`);
+        }
+        output.appendLine("");
+    }
+
+    if (skipped.length > 0) {
+        output.appendLine(`⏭️ 已安裝，略過 (${skipped.length})`);
+        for (const r of skipped) {
+            output.appendLine(`   ${r.name} (${r.id})`);
+        }
+        output.appendLine("");
+    }
+
+    output.appendLine("═══════════════════════════════════════");
+    output.show();
+
+    if (failed.length === 0) {
+        vscode.window.showInformationMessage(`已成功安裝 ${installed.length} 個延伸模組！`);
+    } else {
+        vscode.window.showWarningMessage(
+            `安裝完成：${installed.length} 個成功，${failed.length} 個失敗。詳見輸出面板。`
+        );
+    }
 }

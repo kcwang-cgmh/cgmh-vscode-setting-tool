@@ -12,9 +12,13 @@ export async function checkEnvironmentCommand(): Promise<void> {
     );
 
     if (report.allPassed) {
-        vscode.window.showInformationMessage(
-            `✅ 環境檢測通過！${report.results.map((r) => `${r.name} ${r.version}`).join("、")}`
+        const action = await vscode.window.showInformationMessage(
+            `✅ 環境檢測通過！${report.results.map((r) => `${r.name} ${r.version}`).join("、")}`,
+            "不再提醒"
         );
+        if (action === "不再提醒") {
+            await disableAutoCheck();
+        }
         return;
     }
 
@@ -35,7 +39,7 @@ export async function checkEnvironmentCommand(): Promise<void> {
             `環境檢測發現 ${missingTools.length} 個問題需要處理`,
             "查看詳情",
             "開啟下載頁面",
-            "略過"
+            "不再提醒"
         );
 
         if (action === "查看詳情") {
@@ -49,8 +53,16 @@ export async function checkEnvironmentCommand(): Promise<void> {
                     await vscode.env.openExternal(vscode.Uri.parse(tool.downloadUrl));
                 }
             }
+        } else if (action === "不再提醒") {
+            await disableAutoCheck();
         }
     }
+}
+
+async function disableAutoCheck(): Promise<void> {
+    await vscode.workspace.getConfiguration("cgmh")
+        .update("skipEnvironmentCheck", true, vscode.ConfigurationTarget.Global);
+    vscode.window.showInformationMessage("已關閉啟動時自動檢測。如需重新啟用，請至設定中搜尋「cgmh.skipEnvironmentCheck」。");
 }
 
 function statusIcon(r: ToolCheckResult): string {

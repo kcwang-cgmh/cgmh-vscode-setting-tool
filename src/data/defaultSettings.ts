@@ -1,4 +1,10 @@
 /**
+ * 設定版本號：每次修改 defaultSettings 的值時遞增此版本號，
+ * 讓已安裝的使用者在更新延伸模組後能接收到變更的設定值。
+ */
+export const settingsVersion = 1;
+
+/**
  * 預設 VS Code 設定，來源為 docs/settings.json
  * 使用 key-value 格式，便於用 workspace.getConfiguration().update() 逐一套用
  */
