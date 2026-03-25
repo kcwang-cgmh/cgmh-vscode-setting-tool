@@ -100,12 +100,7 @@
     // ⌨️ 終端設定
     // ========================================
     // 終端滾動歷史記錄行數
-    "terminal.integrated.scrollback": 50000,
-    "[markdown]": {
-        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
-    },
-    "gitlens.ai.model": "vscode",
-    "gitlens.ai.vscode.model": "copilot:gpt-4.1"
+    "terminal.integrated.scrollback": 50000
     // ================================================
     // 使用者自訂設定 - User Customizations 
     // 在下方加入您個人的自訂設定，這些將覆蓋上方的預設設定

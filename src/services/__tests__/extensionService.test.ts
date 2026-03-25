@@ -73,7 +73,8 @@ describe("installExtensionsByCategory", () => {
         for (const ext of testCategory.extensions) {
             expect(vscode.commands.executeCommand).toHaveBeenCalledWith(
                 "workbench.extensions.installExtension",
-                ext.id
+                ext.id,
+                { doNotSync: true }
             );
         }
     });

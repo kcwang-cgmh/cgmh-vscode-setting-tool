@@ -2,7 +2,7 @@
  * 設定版本號：每次修改 defaultSettings 的值時遞增此版本號，
  * 讓已安裝的使用者在更新延伸模組後能接收到變更的設定值。
  */
-export const settingsVersion = 1;
+export const settingsVersion = 2;
 
 /**
  * 預設 VS Code 設定，來源為 docs/settings.json
@@ -63,14 +63,5 @@ export const defaultSettings: Record<string, unknown> = {
     "search.searchView.semanticSearchBehavior": "runOnEmpty",
 
     // ⌨️ 終端設定
-    "terminal.integrated.scrollback": 50000,
-
-    // 📄 格式化設定
-    "[markdown]": {
-        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
-    },
-
-    // GitLens AI 設定
-    "gitlens.ai.model": "vscode",
-    "gitlens.ai.vscode.model": "copilot:gpt-4.1"
+    "terminal.integrated.scrollback": 50000
 };

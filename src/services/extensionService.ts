@@ -96,7 +96,8 @@ export async function installExtensionsByCategory(): Promise<void> {
                 try {
                     await vscode.commands.executeCommand(
                         "workbench.extensions.installExtension",
-                        ext.id
+                        ext.id,
+                        { doNotSync: true }
                     );
                     results.push({ name: ext.name, id: ext.id, categoryLabel: ext.categoryLabel, status: "installed" });
                 } catch {
