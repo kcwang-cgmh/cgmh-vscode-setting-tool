@@ -5,6 +5,14 @@
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.1.0/)，
 版本號遵循 [Semantic Versioning](https://semver.org/lang/zh-TW/)。
 
+## [0.3.0](https://github.com/kcwang-cgmh/cgmh-vscode-setting-tool/compare/v0.2.0...v0.3.0) (2026-03-25)
+
+
+### Features
+
+* 側邊欄新增環境檢測狀態即時顯示 ([a90e524](https://github.com/kcwang-cgmh/cgmh-vscode-setting-tool/commit/a90e524d6add752526fe0a0e5688f2a3e4d8ed13))
+* 安裝延伸模組時跳過同步提示，移除 markdown formatter 與 GitLens AI 設定 ([5f67cb9](https://github.com/kcwang-cgmh/cgmh-vscode-setting-tool/commit/5f67cb90a9434042c1c1741e5f159704f4654a08))
+
 ## [0.2.0](https://github.com/kcwang-cgmh/cgmh-vscode-setting-tool/compare/v0.1.0...v0.2.0) (2026-03-25)
 
 ### Features
