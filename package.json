@@ -16,6 +16,23 @@
   "main": "./dist/extension.js",
   "icon": "media/icon.png",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "cgmh-sidebar",
+          "title": "長庚醫科",
+          "icon": "media/sidebar-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "cgmh-sidebar": [
+        {
+          "id": "cgmh.toolsView",
+          "name": "開發工具"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "cgmh.checkEnvironment",

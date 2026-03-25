@@ -1,5 +1,32 @@
 import { vi } from "vitest";
 
+export const TreeItemCollapsibleState = {
+    None: 0,
+    Collapsed: 1,
+    Expanded: 2,
+};
+
+export class TreeItem {
+    label: string;
+    collapsibleState: number;
+    description?: string;
+    iconPath?: unknown;
+    command?: unknown;
+    contextValue?: string;
+
+    constructor(label: string, collapsibleState?: number) {
+        this.label = label;
+        this.collapsibleState = collapsibleState ?? TreeItemCollapsibleState.None;
+    }
+}
+
+export class ThemeIcon {
+    id: string;
+    constructor(id: string) {
+        this.id = id;
+    }
+}
+
 export const ConfigurationTarget = {
     Global: 1,
     Workspace: 2,
