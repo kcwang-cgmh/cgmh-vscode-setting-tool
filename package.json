@@ -2,7 +2,7 @@
   "name": "cgmh-vscode-setting-tool",
   "displayName": "長庚醫科開發設定工具",
   "description": "快速設定長庚醫院系統開發環境：自動檢測工具、套用標準設定、安裝推薦延伸模組",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "publisher": "kcwang-cgmh",
   "engines": {
     "vscode": "^1.110.0"
