@@ -85,6 +85,7 @@ export const extensionCatalog: ExtensionCategory[] = [
             { id: "doggy8088.quicktype-refresh", name: "QuickType Refresh", description: "JSON 轉型別定義" },
             { id: "yzhang.markdown-all-in-one", name: "Markdown All in One", description: "Markdown 編輯增強" },
             { id: "MS-CEINTL.vscode-language-pack-zh-hant", name: "中文(繁體)語言套件", description: "VS Code 繁體中文介面" },
+            { id: "kcwang-cgmh.cgmh-vscode-setting-tool", name: "長庚 VS Code 設定工具", description: "一鍵安裝延伸模組與同步編輯器設定" },
         ]
     },
 ];

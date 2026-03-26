@@ -29,6 +29,7 @@
 - https://marketplace.visualstudio.com/items?itemName=pflannery.vscode-versionlens
 - https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hant
 - https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one
+- https://marketplace.visualstudio.com/items?itemName=kcwang-cgmh.cgmh-vscode-setting-tool
 - https://marketplace.visualstudio.com/items?itemName=donjayamanne.githistory
 https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens
 https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph
